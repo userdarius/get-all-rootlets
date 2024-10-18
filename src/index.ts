@@ -58,10 +58,7 @@ export const getNFTObjects = async ({
 (async () => {
   const registry = await getSuiPlayNftRegistry();
   log(registry);
-  log(+registry.exaltedMinted + +registry.mythicsMinted);
-})();
 
-(async () => {
   let after = null;
   let results = [];
   let objects = await getNFTObjects({
@@ -72,11 +69,6 @@ export const getNFTObjects = async ({
 
   results.push(...objects.nfts);
   after = objects.pageInfo.endCursor;
-  let nextPage = objects.pageInfo.hasNextPage;
-  console.log({
-    after,
-    nextPage,
-  });
 
   while (after) {
     objects = await getNFTObjects({
@@ -87,12 +79,6 @@ export const getNFTObjects = async ({
 
     results.push(...objects.nfts);
     after = objects.pageInfo.endCursor;
-    nextPage = objects.pageInfo.hasNextPage;
-
-    console.log({
-      after,
-      nextPage,
-    });
   }
 
   log(results.length);
