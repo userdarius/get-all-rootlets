@@ -6,6 +6,7 @@ import {
 import { SuiGraphQLClient } from '@mysten/sui/graphql';
 import util from 'util';
 import { pathOr } from 'ramda';
+import * as fs from 'fs';
 
 export const log = (x: any) => console.log(util.inspect(x, false, null, true));
 
@@ -40,3 +41,7 @@ export const parseSuiPlayRegistry = (obj: SuiObjectResponse) => {
 export const graphQLClient = new SuiGraphQLClient({
   url: 'https://sui-mainnet.mystenlabs.com/graphql',
 });
+
+export const readFile = util.promisify(fs.readFile);
+
+export const writeFile = util.promisify(fs.writeFile);

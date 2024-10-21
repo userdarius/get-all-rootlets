@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@mysten/kiosk':
+        specifier: ^0.9.22
+        version: 0.9.22(typescript@5.6.3)
       '@mysten/sui':
         specifier: ^1.13.0
         version: 1.13.0(typescript@5.6.3)
@@ -314,6 +317,10 @@ packages:
 
   '@mysten/bcs@1.1.0':
     resolution: {integrity: sha512-yy9/1Y4d0FlRywS1+9ze/T7refCbrvwFwJIOKs9M3QBK1njbcHZp+LkVeLqBvIJA5eZ3ZCzmhQ1Xq4Sed5mEBA==}
+
+  '@mysten/kiosk@0.9.22':
+    resolution: {integrity: sha512-vyP9vW3nDbpWDqW8VVzKJxisMySUpmjN+Yw5qoYj4YpceKm/Ndb7l1124css5TClK1601ol+PV8c8a0HhMLtdg==}
+    engines: {node: '>=18'}
 
   '@mysten/sui@1.13.0':
     resolution: {integrity: sha512-zxRFWkb5dFjwQh6gGkswNrdSVoeBbjrL70AmRa13seNe8mfnf2lZgE8Kcj1fj4MTsDI2mGNWihQVkK99cprW+w==}
@@ -1917,6 +1924,14 @@ snapshots:
   '@mysten/bcs@1.1.0':
     dependencies:
       bs58: 6.0.0
+
+  '@mysten/kiosk@0.9.22(typescript@5.6.3)':
+    dependencies:
+      '@mysten/sui': 1.13.0(typescript@5.6.3)
+    transitivePeerDependencies:
+      - '@gql.tada/svelte-support'
+      - '@gql.tada/vue-support'
+      - typescript
 
   '@mysten/sui@1.13.0(typescript@5.6.3)':
     dependencies:

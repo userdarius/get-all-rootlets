@@ -3,7 +3,13 @@ import {
   SUI_PLAY_PRE_ORDER_REGISTRY_OBJECT_ID,
 } from './constants';
 
-import { rpcClient, log, parseSuiPlayRegistry, graphQLClient } from './utils';
+import {
+  rpcClient,
+  log,
+  parseSuiPlayRegistry,
+  graphQLClient,
+  writeFile,
+} from './utils';
 
 import { queryNFTObjects } from './query';
 import { pathOr } from 'ramda';
@@ -82,4 +88,9 @@ export const getNFTObjects = async ({
   }
 
   log(results.length);
+
+  await writeFile(
+    `${__dirname}/../data/sui-play-nfts.json`,
+    JSON.stringify(results, null, 2)
+  );
 })();
