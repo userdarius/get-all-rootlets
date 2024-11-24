@@ -4,4 +4,4 @@ export const SUI_PLAY_PACKAGE_ID =
 export const SUI_PLAY_PRE_ORDER_REGISTRY_OBJECT_ID =
   '0x7e9d2b5d8fb6b9d575e0f6201aaf3343f9e7461587d9f8f029783a9ca1659d0f';
 
-export const SUI_PLAY_NFT_PRE_ORDER_NFT_TYPE = `${SUI_PLAY_PACKAGE_ID}::suiplay_nft::SuiPlay0x1PreorderNFT`;
+export const ROOTLETS_TYPE = `0x8f74a7d632191e29956df3843404f22d27bd84d92cca1b1abde621d033098769::rootlet::Rootlet`;

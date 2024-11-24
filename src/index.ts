@@ -1,6 +1,5 @@
 import {
-  SUI_PLAY_NFT_PRE_ORDER_NFT_TYPE,
-  SUI_PLAY_PRE_ORDER_REGISTRY_OBJECT_ID,
+  ROOTLETS_TYPE,
 } from './constants';
 
 import {
@@ -13,17 +12,8 @@ import {
 
 import { queryNFTObjects } from './query';
 import { pathOr } from 'ramda';
-
-export const getSuiPlayNftRegistry = async () => {
-  const obj = await rpcClient.getObject({
-    id: SUI_PLAY_PRE_ORDER_REGISTRY_OBJECT_ID,
-    options: {
-      showContent: true,
-    },
-  });
-
-  return parseSuiPlayRegistry(obj);
-};
+import fs from 'fs';
+import path from 'path';
 
 interface GetNFTObjectsArgs {
   objectType: string;
@@ -61,14 +51,17 @@ export const getNFTObjects = async ({
   };
 };
 
+const writeToCsv = (filePath, data) => {
+  const csvContent = data.map((item) => item.content.id).join('\n');
+  fs.writeFileSync(filePath, csvContent, 'utf8');
+};
+
 (async () => {
-  const registry = await getSuiPlayNftRegistry();
-  log(registry);
 
   let after = null;
   let results = [];
   let objects = await getNFTObjects({
-    objectType: SUI_PLAY_NFT_PRE_ORDER_NFT_TYPE,
+    objectType: ROOTLETS_TYPE,
     after,
     first: 50,
   });
@@ -78,19 +71,26 @@ export const getNFTObjects = async ({
 
   while (after) {
     objects = await getNFTObjects({
-      objectType: SUI_PLAY_NFT_PRE_ORDER_NFT_TYPE,
+      objectType: ROOTLETS_TYPE,
       after,
       first: 50,
     });
 
+    log(objects.nfts);
     results.push(...objects.nfts);
     after = objects.pageInfo.endCursor;
   }
 
-  log(results.length);
+  log(`Total NFTs fetched: ${results.length}`);
 
-  await writeFile(
-    `${__dirname}/../data/sui-play-nfts.json`,
-    JSON.stringify(results, null, 2)
-  );
+  // Write the results to a JSON file
+  const jsonFilePath = path.join(__dirname, '../data/rootlets-nfts.json');
+  await writeFile(jsonFilePath, JSON.stringify(results, null, 2));
+
+  // Extract IDs and write them to a CSV file
+  const csvFilePath = path.join(__dirname, '../data/rootlets-nfts.csv');
+  writeToCsv(csvFilePath, results);
+
+  log(`Data written to JSON: ${jsonFilePath}`);
+  log(`IDs written to CSV: ${csvFilePath}`);
 })();
